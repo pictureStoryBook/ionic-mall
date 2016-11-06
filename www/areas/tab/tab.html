@@ -1,0 +1,26 @@
+<ion-tabs class="tabs-icon-top tabs-color-active-positive tabs-striped">
+
+  <!-- Dashboard Tab -->
+  <ion-tab title="主页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/home">
+    <!--ui-router根据name属性来解析页面渲染,ionic对ui-router又做了一次封装-->
+    <!--<div ui-view="tab-home"></div>-->
+    <ion-nav-view name="tab-home"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Chats Tab -->
+  <ion-tab  title="分类" icon-off="ion-ios-paper-outline" icon-on="ion-ios-paper" href="#/tab/category">
+    <ion-nav-view name="tab-category"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Chats Tab -->
+  <ion-tab  title="购物车" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart" href="#/cart" badge="obj_cartCount.count" badge-style="badge-assertive">
+    <ion-nav-view name="tab-cart"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Account Tab -->
+  <ion-tab title="我的" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
+    <ion-nav-view name="tab-account"></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>

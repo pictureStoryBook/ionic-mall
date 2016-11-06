@@ -1,0 +1,60 @@
+<!--内容都包裹在ion-view中，方便添加一些功能属性-->
+<ion-view id="guidePage" view-title="引导页" cache-view="false">
+  <div id="guideSlide" class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="item-logo" style="background-color: #D74B28">
+          <a href="#">
+            京彩分呈
+          </a>
+
+          <div class="animate guide-show">
+            <h2 class="animated bounceInDown">10亿积分</h2>
+            <li class="animated bounceInLeft">5亿红包</li>
+            <li class="animated bounceInRight">全民抢购</li>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="item-logo" style="background-color: #02C1ED;">
+          <a href="#">
+            京心东魄
+          </a>
+
+          <div id="tips-2" class="animate hidden">
+            <h2 class="animated bounceInDown">5折秒杀</h2>
+            <li class="animated bounceInLeft">限时秒杀</li>
+            <li class="animated bounceInRight">组团秒杀</li>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="item-logo" style="background-color: #67C962;">
+          <a href="#">
+            京东金融
+          </a>
+
+          <div id="tips-3" class="animate hidden">
+            <h2 class="animated bounceInDown">轻松白条</h2>
+            <li class="animated bounceInLeft">自如众筹</li>
+            <li class="animated bounceInRight">理财神器</li>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="item-logo" style="background-color: #FCD208;">
+          <a href="#">
+            京东购物
+          </a>
+
+          <div class="animate hidden">
+            <button  id='close' class="mui-btn mui-btn-warning mui-btn-outlined" ng-click="func_goHome()">立即体验</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</ion-view>
+
+

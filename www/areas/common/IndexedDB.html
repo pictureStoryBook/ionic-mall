@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 1、获取对象，获取indexdb对象,为了兼容性的固定写法
+  window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+  window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+  window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+  window.IDBCursor = window.IDBCursor || window.webkitIDBCursor || window.msIDBCursor;
+
+
+  // 2、定义数据库的基本信息
+  var dbInfo = {
+    dbName: 'mydb',//数据库名称
+    dbVersion: 2016, //用小数会四舍五入，版本号只能越来越大
+    dbInstance: {},//可用可不用
+  };
+
+  // 3、创建数据库
+  var dbContent = window.indexedDB.open(dbInfo.dbName, dbInfo.dbVersion);
+
+  // 判断数据库版本号是否更新了（创建和修改表结构在这里操作）
+  // 如果数据库名称和版本号相同，那么该方法只执行一次
+  dbContent.onupgradeneeded = function (e) {
+    console.log(e);
+    // 获取到数据库
+    var _db = e.target.result;
+    // 获取到所有表
+    var storeNames = _db.objectStoreNames;
+    // 判断是否有cart表
+    if (!storeNames.contains("cart")) {
+      // 创建一个表结构出来
+      _db.createObjectStore("cart", {
+        keyPath: "goodsId",//相当于mysql数据库中的主键id，用于唯一标识该数据
+        autoIncrement: true
+      });
+    }
+
+  }
+
+  // 打开数据库成功的回调方法，用于数据库的增删改查
+  dbContent.onsuccess = function (e) {
+
+    // 获取数据库
+    var _db = e.target.result;
+    // 开启事物，参数：表名称数组，事务读写权限
+    var trans = _db.transaction(["cart"], "readwrite");
+    // 获取表
+    var store = trans.objectStore("cart")
+
+
+    // 虽然可以在一次成功打开请求的操作中同时操作多次增删改查命令，但是不推荐，因为这样前面的操作就不能被监听到了
+    // 增加数据
+    var req=store.add({
+      goodsId:'df6',
+      prise:12.3,
+      name:"衣服",
+      size:"M",
+      age:99
+    })
+
+    // 修改数据
+//    var req=store.put({
+//      goodsId:'df6',
+//      prise:12.79,
+//      name:"衣服",
+//      size:"L",
+//      age:1000
+//    }
+
+    // 删除数据
+//    var req = store.delete("df6");
+
+    // 查询数据
+//    var req = store.get("df1");
+
+    // 删除所有数据
+//    var req = store.clear();
+
+    //表操作成功的回调函数
+    req.onsuccess=function(e){
+      console.log('ok');
+    }
+   //表操作失败的回调函数
+    req.onerror=function(e){
+      console.log('error')
+    }
+
+    // 查询所有数据（用了游标）
+    var cursor = store.openCursor();
+    var data = [];
+
+    cursor.onsuccess = function (e) {
+      var result = e.target.result;
+      if (result && result !== null) {
+        data.push(result.value);
+        // 重新执行onsuccess句柄
+        result.continue();
+      }
+      console.log(data);
+    }
+    cursor.onerror = function () {
+
+    }
+
+
+  }
+
+
+  // 打开数据库请求失败的回调方法
+  dbContent.onerror = function (e) {
+    console.log(3);
+  }
+
+
+</script>
+</body>
+</html>
